@@ -1,0 +1,24 @@
+import requests
+from bs4 import BeautifulSoup
+
+site = "https://www.climatempo.com.br/previsao-do-tempo/agora/cidade/88/goiania-go"
+html = requests.get(site).content
+dados = BeautifulSoup(html, 'html.parser')
+temp = dados.find("span",
+                  class_="-bold -gray-dark-2"
+                         " -font-55 _margin-l-20"
+                         " _center")
+#print(temp.text[1:3])
+temp_real = (temp.string[1:3])
+# temp_site = float(temp.text)
+# print(temp_site)
+umidade = dados.find("span",
+                     class_="-gray-light")
+print("a umidade do ar está:", umidade.text)
+
+temp_arcondicionado = int(24)
+
+if int(temp_real) < int(temp_arcondicionado):
+    print('que frio!!!')
+else:
+    print('calor ein!!')
